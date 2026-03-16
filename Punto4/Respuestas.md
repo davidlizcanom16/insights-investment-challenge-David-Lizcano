@@ -2,182 +2,69 @@
 
 ### 4.1.1 ¿Cómo funciona ACH en EE.UU.?
 
-Cuando un cliente de Insights deposita dinero desde su cuenta bancaria mediante ACH, el proceso no ocurre de forma instantánea. Se trata de un sistema de pagos **por lotes** que involucra varias instituciones financieras y que normalmente tarda entre **1 y 3 días hábiles** en completarse.
+Cuando un cliente de Insights deposita dinero desde su cuenta bancaria, lo que ocurre detrás no es una transferencia instantánea. El sistema ACH funciona como una red de pagos que procesa transacciones por lotes y que involucra a varias instituciones financieras. Por eso, completar una transferencia suele tardar entre uno y tres días hábiles.
 
-El flujo completo del sistema ACH es el siguiente:
+El proceso comienza cuando Insights inicia la solicitud de débito desde la cuenta del cliente. En la terminología del sistema ACH, Insights actúa como el **Originator**, es decir, la entidad que origina la transacción.
 
-**1. Originator (Insights)**  
-Insights inicia la instrucción de débito desde la cuenta bancaria del cliente. En otras palabras, solicita retirar una cantidad específica de dinero desde la cuenta del usuario.
+Esa instrucción primero pasa por el banco de Insights, conocido como **ODFI (Originating Depository Financial Institution)**. Este banco reúne las instrucciones de pago del día y las envía en archivos por lotes hacia la red ACH.
 
-**2. ODFI (Originating Depository Financial Institution)**  
-La solicitud pasa primero por el banco de Insights. Este banco recopila múltiples instrucciones del día y las envía agrupadas en un archivo batch hacia la red ACH.
+La **red ACH**, operada por la Reserva Federal o por The Clearing House, actúa como intermediaria. Su función es enrutar cada transacción hacia el banco correcto.
 
-**3. ACH Network**  
-La red ACH (operada por la Reserva Federal o por The Clearing House) actúa como intermediario. Su función es enrutar cada transacción hacia el banco correspondiente del cliente.
+El banco del cliente, llamado **RDFI (Receiving Depository Financial Institution)**, recibe la instrucción, verifica que la cuenta exista y que tenga fondos suficientes, y ejecuta el débito. En ese momento el dinero sale de la cuenta del cliente y finalmente se acredita en la cuenta de Insights.
 
-**4. RDFI (Receiving Depository Financial Institution)**  
-El banco del cliente recibe la instrucción, verifica que la cuenta exista y que tenga fondos suficientes, y ejecuta el débito.
+En cuanto a los tiempos, el ACH estándar suele tardar entre **uno y tres días hábiles** en liquidarse. Existe también la modalidad **Same-Day ACH**, que permite que la transacción se procese el mismo día siempre que se envíe antes de las ventanas de corte establecidas por la red ACH.
 
-**5. Receiver (cliente)**  
-El dinero se debita de la cuenta del cliente y finalmente se acredita en la cuenta de Insights.
+Algo importante que muchos clientes no saben es que incluso cuando aparece un mensaje de “transferencia exitosa”, el banco todavía puede devolver la transacción si encuentra algún problema. Por esta razón, muchas plataformas financieras mantienen un período de espera de **tres a cinco días hábiles** antes de permitir que esos fondos se utilicen para invertir.
 
-#### Tiempos de liquidación
-
-Existen dos modalidades principales:
-
-**ACH estándar**
-- Tiempo típico: **1–3 días hábiles**
-- Es el método más común para transferencias regulares.
-
-**Same-Day ACH**
-- Liquidación el mismo día
-- Debe enviarse antes de las ventanas de corte aproximadas:
-  - 10:30 AM ET  
-  - 1:00 PM ET  
-  - 4:45 PM ET
-
-Un punto importante es que, incluso cuando una transacción aparece como "exitosa", el banco del cliente todavía puede **rechazarla o devolverla posteriormente**. Por esta razón, muchas plataformas financieras mantienen un período de retención de **3 a 5 días hábiles** antes de permitir que esos fondos se utilicen para invertir.
-
-#### Cuándo recomendar Same-Day ACH
-
-El Same-Day ACH tiene sentido en situaciones como:
-
-- Cuando el cliente quiere **invertir el mismo día** por una oportunidad de mercado.
-- Cuando se necesita **corregir rápidamente un fondeo fallido**.
-- Cuando se trata del **primer depósito de un cliente nuevo** y se quiere mejorar la experiencia inicial.
-
-Para depósitos recurrentes o programados, el **ACH estándar suele ser suficiente y más económico**.
+El Same-Day ACH tiene sentido recomendarlo cuando el cliente necesita que los fondos estén disponibles ese mismo día, por ejemplo para aprovechar una oportunidad de mercado o para corregir rápidamente un fondeo fallido. Para depósitos recurrentes o programados, el ACH estándar suele ser suficiente y además es más económico.
 
 ---
 
 ### 4.1.2 Requisitos para fondear una cuenta vía ACH
 
-Para configurar un débito ACH desde la cuenta bancaria de un cliente, normalmente se requiere la siguiente información:
+Para que Insights pueda debitar dinero desde la cuenta bancaria de un cliente, es necesario recopilar algunos datos básicos. En general se requiere el nombre del titular de la cuenta, el routing number del banco, el número de cuenta bancaria y el tipo de cuenta (corriente o de ahorros).
 
-- Nombre del titular de la cuenta
-- Routing number (ABA) del banco
-- Número de cuenta bancaria
-- Tipo de cuenta (corriente o ahorros)
+Además de estos datos, el cliente debe aceptar una **autorización ACH**, que es el consentimiento legal que permite a la plataforma iniciar débitos desde su cuenta bancaria.
 
-Además, el cliente debe aceptar una **autorización ACH**, que es el consentimiento legal que permite a la plataforma iniciar débitos desde su cuenta.
+Antes de realizar el primer débito, normalmente se requiere verificar que la cuenta realmente pertenece al cliente. Un método común para hacerlo es el de **micro-depósitos**. En este proceso se envían dos pequeños montos —normalmente de menos de un dólar— a la cuenta del cliente, y el cliente debe confirmar esos montos uno o dos días después.
 
-#### Verificación de la cuenta bancaria
+Otra alternativa más moderna es la verificación instantánea mediante servicios como **Plaid o MX**, que permiten al cliente iniciar sesión en su banca en línea y confirmar la cuenta en segundos.
 
-Antes de procesar el primer débito, la cuenta generalmente debe ser verificada. Existen dos métodos principales.
+En cuanto a límites, las cuentas nuevas suelen tener restricciones de fondeo diario que normalmente se encuentran entre **cinco mil y veinticinco mil dólares**, aunque estos límites suelen aumentar conforme el cliente utiliza la plataforma y construye historial.
 
-**Micro-depósitos**
+Incluso después de que el depósito se procesa, los fondos suelen mantenerse en espera durante **tres a cinco días hábiles** antes de poder invertirse. Este período de retención protege a la plataforma en caso de que la transacción sea devuelta por el banco.
 
-Se envían dos pequeños montos (normalmente menores a $1) a la cuenta bancaria del cliente. El cliente debe confirmar esos montos uno o dos días después.
+Cuando una transacción ACH falla, el sistema utiliza códigos de devolución definidos por Nacha. Algunos de los más comunes son **R01**, que indica fondos insuficientes; **R02**, que significa que la cuenta está cerrada; y **R03**, que indica que los datos bancarios no coinciden con ningún registro válido del banco.
 
-Ventajas:
-- Funciona con prácticamente cualquier banco.
-
-Desventajas:
-- Introduce fricción y demora en el proceso de activación.
-
-**Verificación instantánea**
-
-Servicios como **Plaid o MX** permiten que el cliente se autentique en su banca en línea y verifique la cuenta en segundos.
-
-Ventajas:
-- Activación inmediata.
-- Mejor experiencia de usuario.
-
-#### Límites y disponibilidad de fondos
-
-Las cuentas nuevas suelen tener límites iniciales de fondeo diario entre **$5,000 y $25,000**, que pueden aumentar conforme el cliente construye historial en la plataforma.
-
-Después de procesarse el depósito, los fondos suelen permanecer en espera durante **3 a 5 días hábiles** antes de poder utilizarse para invertir.
-
-#### Códigos comunes de rechazo (Nacha)
-
-**R01 — Fondos insuficientes**
-
-La cuenta no tenía saldo suficiente en el momento del débito.
-
-Mensaje al cliente:  
-> No pudimos completar el depósito porque la cuenta no tenía fondos suficientes. Te recomendamos verificar tu saldo e intentar nuevamente.
-
-**R02 — Cuenta cerrada**
-
-La cuenta bancaria ya no está activa.
-
-Mensaje al cliente:  
-> Parece que la cuenta bancaria vinculada está cerrada. Por favor conecta una cuenta diferente para continuar.
-
-**R03 — No existe cuenta**
-
-El routing number o el número de cuenta no coinciden con registros válidos del banco.
-
-Mensaje al cliente:  
-> No pudimos verificar los datos bancarios. Te recomendamos revisar el routing number y el número de cuenta en tu app bancaria o en un cheque.
+En todos estos casos, lo más importante es comunicar el problema al cliente de forma clara y decirle exactamente qué debe hacer para solucionarlo.
 
 ---
 
 ### 4.1.3 Routing numbers (ABA): lógica y lookup por banco y estado
 
-El **ABA routing number** es un código de **9 dígitos** que identifica a una institución financiera dentro del sistema de pagos de Estados Unidos.
+El **ABA routing number** es un código de nueve dígitos que identifica a una institución financiera dentro del sistema de pagos de Estados Unidos. Es el número que aparece en la parte inferior izquierda de los cheques y que permite que las transferencias ACH lleguen al banco correcto.
 
-Es el número que aparece en la parte inferior izquierda de los cheques y es esencial para procesar transferencias ACH.
+El número tiene una estructura específica. Los primeros dígitos están asociados al distrito de la Reserva Federal donde opera el banco, los siguientes identifican a la institución financiera y el último funciona como un dígito de control que permite validar matemáticamente el número.
 
-#### Estructura del routing number
+Algo que suele generar confusión es que un mismo banco puede tener distintos routing numbers dependiendo del estado donde se abrió la cuenta. Esto ocurre porque el sistema bancario estadounidense ha pasado por muchas fusiones y adquisiciones a lo largo del tiempo, y muchas instituciones mantuvieron los códigos regionales que ya existían.
 
-El número está compuesto por tres partes:
+Por ejemplo, un banco grande como Bank of America puede tener un routing number distinto en Texas que en California. Incluso si el cliente se muda de estado, normalmente seguirá utilizando el routing correspondiente al lugar donde abrió su cuenta originalmente.
 
-- Los primeros dígitos indican el **distrito de la Reserva Federal**.
-- Los siguientes identifican a la **institución financiera**.
-- El último es un **dígito de control** que permite validar matemáticamente el número.
-
-#### Por qué un banco puede tener distintos routing numbers
-
-Muchos bancos en Estados Unidos tienen routing numbers diferentes dependiendo del **estado donde se abrió la cuenta**.
-
-Esto ocurre debido a décadas de **fusiones y adquisiciones bancarias**. Cuando un banco grande absorbe otro, muchas veces conserva los routing numbers regionales.
-
-Por ejemplo, **Bank of America puede tener un routing number distinto en Texas que en California**.
-
-Incluso si un cliente se muda a otro estado, normalmente seguirá utilizando el routing asociado al estado donde abrió su cuenta originalmente.
-
-#### Implicación para el agente
-
-Para encontrar el routing correcto, el agente debe preguntar:
-
-- el banco del cliente
-- el estado donde abrió su cuenta
-
-Con esta información se puede realizar el lookup correcto y pedir al cliente que confirme que el número coincide con el que aparece en su app bancaria o en su chequera.
-
-Si el cliente proporciona un routing diferente, el sistema puede validar su estructura antes de utilizarlo.
+Por esta razón, cuando se intenta encontrar el routing correcto no basta con saber el banco del cliente. También es importante saber en qué estado se abrió la cuenta. Con esa información es posible hacer el lookup correcto y confirmar que el número coincide con el que aparece en la app bancaria o en un cheque del cliente.
 
 ---
 
 ### 4.1.4 Comparativa: ACH vs Wire vs tarjeta de débito
 
-Cuando un cliente quiere fondear su cuenta de inversión, existen tres métodos principales:
+Cuando un cliente quiere depositar dinero en su cuenta de inversión, normalmente tiene tres opciones principales: ACH, transferencia wire o tarjeta de débito.
 
-**ACH**
+El **ACH** es el método más común porque tiene un costo muy bajo y permite automatizar depósitos fácilmente. Por esa razón es la opción preferida para depósitos recurrentes o para clientes que están construyendo su portafolio poco a poco.
 
-- Tiempo: 1–3 días hábiles
-- Costo: muy bajo
-- Ideal para depósitos recurrentes
+Las **transferencias wire**, en cambio, son mucho más rápidas y el dinero puede llegar el mismo día. Sin embargo, suelen tener costos mucho más altos, por lo que normalmente se utilizan para montos grandes o cuando el cliente necesita que los fondos estén disponibles inmediatamente.
 
-Es el método preferido por la mayoría de plataformas porque permite automatizar depósitos y mantener costos operativos bajos.
+La **tarjeta de débito** permite que el dinero se refleje casi de inmediato en la cuenta del cliente, pero también implica costos mayores para la plataforma. Por esta razón suele utilizarse principalmente para primeros depósitos pequeños, cuando lo más importante es que el cliente vea el dinero reflejado rápidamente y tenga una buena primera experiencia con la plataforma.
 
-**Wire transfer**
-
-- Tiempo: mismo día o menos de 24 horas
-- Costo: alto
-
-Se utiliza principalmente cuando el cliente necesita que los fondos estén disponibles de inmediato o cuando el monto transferido es muy alto.
-
-**Tarjeta de débito**
-
-- Tiempo: casi instantáneo
-- Costo: más alto que ACH
-
-Se utiliza frecuentemente para **primeros depósitos pequeños**, ya que permite que el cliente vea el dinero reflejado inmediatamente, lo que mejora la experiencia inicial.
-
-En la práctica, el **ACH suele ser la opción principal** para depósitos recurrentes debido a su bajo costo y facilidad de uso.
+En la práctica, la mayoría de los clientes termina utilizando ACH como método principal porque combina bajo costo, facilidad de uso y la posibilidad de automatizar depósitos a largo plazo.
 
 ## 4.2 Diseño del agente — Arquitectura y flujo conversacional
 
