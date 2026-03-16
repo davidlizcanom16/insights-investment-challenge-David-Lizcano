@@ -175,9 +175,6 @@ Ver código completo en:
 
 ---
 
-## 4.5 Demo y Reflexión
-
-Ver archivo principal: [`punto4/README.md`](README.md)
 
 ## 4.5 Demo y Reflexión
 
@@ -188,7 +185,7 @@ ahora mismo. Puedes entrar, escribirle en español o en inglés, y
 ver cómo responde en tiempo real. El sidebar tiene un selector que
 te permite simular los tres escenarios sin configuración adicional.
 
-👉 **[Abrir Sofia — ACH Funding Agent](https://tuapp.streamlit.app)**
+👉 **[Abrir Sofia — ACH Funding Agent]([https://tuapp.streamlit.app](https://insights-investment-challenge-david-lizcano-123456789.streamlit.app/))**
 
 ---
 
