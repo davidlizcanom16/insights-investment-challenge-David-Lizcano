@@ -131,7 +131,7 @@ def send_message(chat_state: dict, message: str) -> str:
     )
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash-lite",
+        model="gemini-2.5-flash",
         config=types.GenerateContentConfig(
             system_instruction=build_system_prompt(),
             max_output_tokens=512,
