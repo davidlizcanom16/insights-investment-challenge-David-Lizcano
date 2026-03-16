@@ -21,7 +21,8 @@ if "messages" not in st.session_state:
 
 if "chat_session" not in st.session_state:
     api_key = st.secrets["GEMINI_API_KEY"]
-    st.session_state.chat_session = create_agent(api_key)
+    client = create_agent(api_key)
+    st.session_state.chat_session = start_chat(client)
 
 if "client_id" not in st.session_state:
     st.session_state.client_id = None
