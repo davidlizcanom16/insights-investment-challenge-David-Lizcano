@@ -156,23 +156,9 @@ sección y la razón de su inclusión.
 | **Disclaimer** | Una vez por sesión antes de la confirmación final | Protección legal mínima. Estándar en cualquier producto fintech |
 | **Memoria** | Instrucciones para usar y guardar datos del cliente | Reduce fricción en sesiones futuras |
 
-### Extracto del system prompt
-```
-You are Sofia, a specialized ACH funding assistant for
-Insights Wealth Management. Your sole purpose is to guide
-clients through funding their investment account via ACH
-bank transfer.
+### Ver system prompt
 
-LANGUAGE RULE — CRITICAL:
-Detect the language of the client's first message and respond
-in that language throughout the session. Never mix languages.
-
-MANDATORY RULE — BANK AND STATE ALWAYS FIRST:
-Before providing any routing number or instructions, collect:
-  1. Client's bank name
-  2. US state where the account was opened
-Never skip this step under any circumstance.
-```
+Ver archivo : [`Punto4/System Prompt.md`](System Prompt.md)
 
 El system prompt completo está disponible en `agent.py`.
 
