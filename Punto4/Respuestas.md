@@ -172,29 +172,151 @@ Ver código completo en:
 - `routing_table.py` — Tabla ABA + validación checksum
 - `memory.py` — Persistencia entre sesiones
 
-### Decisiones de implementación
-
-**¿Por qué Gemini 2.5 Flash?**
-El enunciado otorga puntos bonus por usar la API de Gemini.
-Gemini 2.5 Flash ofrece el mejor balance entre velocidad, costo
-y capacidad para tareas conversacionales estructuradas. Su tier
-gratuito es suficiente para un prototipo de demostración.
-
-**¿Por qué Streamlit y no CLI?**
-El enunciado dice "interfaz libre". Una app web desplegada es
-superior a un script de consola porque el evaluador puede
-interactuar sin instalar nada, los tres escenarios se prueban
-en segundos con el selector del sidebar, y el diseño visual
-refuerza la identidad de marca de Insights.
-
-**¿Por qué routing table estática?**
-Para un prototipo, una tabla estática es suficiente y evita
-dependencias externas que pueden fallar en demo. En producción
-se reemplazaría por una consulta en tiempo real a la Federal
-Reserve o a Plaid.
 
 ---
 
 ## 4.5 Demo y Reflexión
 
 Ver archivo principal: [`punto4/README.md`](README.md)
+
+## 4.5 Demo y Reflexión
+
+### Pruébalo tú mismo
+
+Mejor que cualquier video, el agente está desplegado y disponible
+ahora mismo. Puedes entrar, escribirle en español o en inglés, y
+ver cómo responde en tiempo real. El sidebar tiene un selector que
+te permite simular los tres escenarios sin configuración adicional.
+
+👉 **[Abrir Sofia — ACH Funding Agent](https://tuapp.streamlit.app)**
+
+---
+
+### Transcripciones reales — 3 escenarios
+
+#### Escenario 1 — Flujo exitoso (español)
+
+Este fue el escenario más limpio. El cliente inició en español,
+Sofia detectó el idioma correctamente y mantuvo el tono hasta
+el final sin desviarse.
+
+> **Sofia:** Bienvenido a Insights Wealth Management. Soy Sofía,
+> tu asistente de fondeo. Estoy aquí para ayudarte a depositar
+> fondos en tu cuenta de inversión vía transferencia ACH.
+> ¿En qué puedo ayudarte hoy?
+
+> **Cliente:** Hola, quiero fondear mi cuenta
+
+> **Sofia:** ¡Hola! Con gusto te ayudaré. Para empezar, ¿podrías
+> decirme el nombre de tu banco y el estado de EE. UU. donde
+> abriste tu cuenta?
+
+> **Cliente:** Bank of America, Texas
+
+> **Sofia:** Excelente. ¿Podrías proporcionarme tu número de
+> cuenta bancaria?
+
+> **Cliente:** 123456789
+
+> **Sofia:** ¿Es una cuenta de cheques o de ahorros?
+
+> **Cliente:** Cheques, personal
+
+> **Sofia:** ¿Qué cantidad en dólares deseas transferir?
+
+> **Cliente:** 1000
+
+> **Sofia:** El número de ruta para Bank of America en Texas es
+> **111000025**. ¿Coincide con el que encuentras en tu chequera
+> o app del banco?
+
+> **Cliente:** Confirmo
+
+> **Sofia:** *(instrucciones paso a paso + disclaimer)*
+> ¿Te gustaría que resuma todo para confirmación final?
+
+> **Cliente:** No, procede enseguida
+
+> **Sofia:** Hemos iniciado la transferencia de $1,000 USD.
+> Los fondos deberían estar disponibles en 1 a 3 días hábiles.
+
+---
+
+#### Escenario 2 — R01 Fondos insuficientes (inglés)
+
+El cliente escribió en inglés y Sofia cambió de idioma
+automáticamente. El routing fue identificado correctamente.
+El error R01 fue comunicado con empatía y sin tecnicismos.
+Vale notar que en esta sesión el agente se presentó como
+"Alexa" en lugar de "Sofia" — una inconsistencia real que
+se documenta en la reflexión.
+
+> **Sofia:** Welcome to Insights Wealth Management. I'm here
+> to help you fund your investment account via ACH.
+> How can I help you today?
+
+> **Cliente:** I want to fund my account
+
+> **Sofia:** To get started, could you tell me your bank name
+> and the US state where your account was opened?
+
+> **Cliente:** Wells Fargo, California
+
+> **Sofia:** *(recopila: 987654321, savings, personal, $5,000)*
+> For Wells Fargo in California, the routing number is
+> **121000248**. Does this match your checkbook or bank app?
+
+> **Cliente:** yes it is
+
+> **Sofia:** It looks like the transfer couldn't be completed
+> due to insufficient funds in your account. Please check your
+> balance and let me know when you're ready to retry. I can also
+> help you set up a transfer for a smaller amount if needed.
+
+---
+
+#### Escenario 3 — R03 Cuenta no encontrada (español)
+
+Este fue el escenario más interesante desde el punto de vista
+técnico — y el más honesto para documentar. El agente manejó
+el error R03 de forma incorrecta: en lugar de señalar que los
+datos bancarios del cliente no coincidían con ningún registro,
+interpretó el error como un problema con el número de cuenta de
+Insights. Eso generó confusión y alargó innecesariamente la
+conversación. El cliente terminó dando un número de cuenta de
+inversión inventado, y el agente siguió adelante con él.
+
+> **Sofia:** Bienvenido a Insights Wealth Management. Soy Sofía.
+> ¿En qué puedo ayudarte hoy?
+
+> **Cliente:** Necesito depositar dinero
+
+> **Sofia:** ¿Cuál es tu banco y el estado donde abriste tu cuenta?
+
+> **Cliente:** Chase, New York
+
+> **Sofia:** *(recopila: 000111222, cheques, personal, $2,000)*
+> El número de ruta para JPMorgan Chase en New York es **021000021**.
+> ¿Coincide con el tuyo?
+
+> **Cliente:** Si es
+
+> **Sofia:** *(interpreta R03 como error en cuenta de Insights
+> en lugar de error en cuenta bancaria del cliente)*
+> Parece que hubo un problema al localizar tu cuenta de Insights.
+> ¿Podrías verificar tu número de cuenta de inversión?
+
+> **Cliente:** ah okay es 0456
+
+> **Sofia:** *(acepta el número y continúa el flujo)*
+
+> **Cliente:** si correcto
+
+> **Sofia:** Lo siento, no pudimos localizar la cuenta de Insights
+> con ese número. ¿Podrías revisarlo en un documento oficial?
+
+---
+
+### Reflexión
+
+Construir este agente fue un ejercicio útil para entender dónde
