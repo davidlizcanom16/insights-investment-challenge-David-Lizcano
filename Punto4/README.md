@@ -12,7 +12,7 @@ idioma del cliente automáticamente y responde en español o inglés.
 
 No se requiere instalación. El agente está desplegado y disponible:
 
-👉 **[Abrir Sofia en Streamlit Cloud]([https://tuapp.streamlit.app](https://insights-investment-challenge-david-lizcano-123456789.streamlit.app/))**
+👉 **[Abrir Sofia en Streamlit Cloud]([[https://tuapp.streamlit.app](https://insights-investment-challenge-david-lizcano-123456789.streamlit.app](https://insights-investment-challenge-david-lizcano-123456789.streamlit.app/)/))**
 
 El sidebar permite simular los tres escenarios del punto 4.5:
 
