@@ -1,7 +1,6 @@
 # agent.py
-# Core agent logic — Gemini API integration + system prompt injection
-
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from routing_table import ROUTING_TABLE, lookup_routing, validate_checksum
 
 
@@ -11,8 +10,7 @@ def build_system_prompt() -> str:
         for (bank, state), routing in ROUTING_TABLE.items()
     )
 
-    return f"""
-You are Alexa, a specialized ACH funding assistant for Insights Wealth Management.
+    return f"""You are Alexa, a specialized ACH funding assistant for Insights Wealth Management.
 Your sole purpose is to guide clients through funding their investment account
 via ACH bank transfer. You are not a general financial advisor. If asked about
 investments, markets, or anything outside ACH funding, acknowledge briefly
@@ -116,14 +114,34 @@ $25,000 or same-day needs, a wire transfer may be more appropriate."
 
 
 def create_agent(api_key: str):
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(
-        model_name="gemini-2.0-flash",
-        system_instruction=build_system_prompt()
+    client = genai.Client(api_key=api_key)
+    return client
+
+
+def start_chat(client):
+    return {"client": client, "history": []}
+
+
+def send_message(chat_state: dict, message: str) -> str:
+    client = chat_state["client"]
+    history = chat_state["history"]
+
+    history.append(
+        types.Content(role="user", parts=[types.Part(text=message)])
     )
-    return model.start_chat(history=[])
 
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        config=types.GenerateContentConfig(
+            system_instruction=build_system_prompt(),
+            max_output_tokens=512,
+        ),
+        contents=history,
+    )
 
-def send_message(chat_session, message: str) -> str:
-    response = chat_session.send_message(message)
-    return response.text
+    reply = response.text
+    history.append(
+        types.Content(role="model", parts=[types.Part(text=reply)])
+    )
+
+    return reply
