@@ -158,9 +158,9 @@ sección y la razón de su inclusión.
 
 ### Ver system prompt
 
-Ver archivo : [`Punto4/System Prompt.md`](System Prompt.md)
+Ver archivo en System Prompt.md
 
-El system prompt completo está disponible en `agent.py`.
+También el system prompt completo está disponible en `agent.py`.
 
 ---
 
