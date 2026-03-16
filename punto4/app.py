@@ -1,7 +1,3 @@
-# app.py
-# Insights ACH Funding Agent — Sofia
-# Streamlit UI with Insights WM visual identity
-
 import streamlit as st
 from agent import create_agent, start_chat, send_message
 from memory import get_client_memory, save_client_memory
@@ -16,82 +12,48 @@ st.set_page_config(
 # ── Custom CSS — Insights Visual Identity ─────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600&display=swap');
-
 /* Global */
 html, body, [class*="css"] {
-    font-family: 'Montserrat', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: #1A1A1A;
     background-color: #FFFFFF;
 }
 
-/* Hide default Streamlit header */
 #MainMenu, footer, header {visibility: hidden;}
 
-/* App container */
 .block-container {
     max-width: 820px;
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     padding-bottom: 2rem;
-}
-
-/* Header banner */
-.insights-header {
-    background-color: #002D62;
-    padding: 24px 32px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid #C5A059;
-}
-
-.insights-header h1 {
-    font-family: 'Playfair Display', serif;
-    color: #FFFFFF;
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0;
-}
-
-.insights-header p {
-    color: #C5A059;
-    font-size: 0.78rem;
-    margin: 4px 0 0 0;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
 }
 
 /* Chat messages */
 .stChatMessage {
     border-radius: 2px !important;
-    border: 1px solid #E1E8ED;
-    background-color: #FFFFFF;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    margin-bottom: 8px;
+    border: 1px solid #E1E8ED !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+    margin-bottom: 6px !important;
 }
 
 /* User message */
 .stChatMessage[data-testid="chat-message-user"] {
     background-color: #F4F7F9 !important;
-    border-left: 2px solid #002D62;
+    border-left: 3px solid #002D62 !important;
 }
 
 /* Assistant message */
 .stChatMessage[data-testid="chat-message-assistant"] {
     background-color: #FFFFFF !important;
-    border-left: 2px solid #C5A059;
+    border-left: 3px solid #C5A059 !important;
 }
 
 /* Chat input */
 .stChatInput textarea {
     border: 1px solid #E1E8ED !important;
     border-radius: 2px !important;
-    font-family: 'Montserrat', sans-serif !important;
     font-size: 0.9rem !important;
-    color: #1A1A1A !important;
     line-height: 1.6 !important;
 }
-
 .stChatInput textarea:focus {
     border-color: #002D62 !important;
     box-shadow: none !important;
@@ -103,15 +65,12 @@ html, body, [class*="css"] {
     color: #FFFFFF !important;
     border: none !important;
     border-radius: 2px !important;
-    font-family: 'Montserrat', sans-serif !important;
     font-size: 0.82rem !important;
     font-weight: 600 !important;
-    letter-spacing: 0.04em !important;
-    padding: 0.5rem 1.2rem !important;
+    padding: 0.45rem 1rem !important;
     transition: background-color 0.3s ease !important;
     width: 100%;
 }
-
 .stButton > button:hover {
     background-color: #003d82 !important;
 }
@@ -119,45 +78,21 @@ html, body, [class*="css"] {
 /* Sidebar */
 [data-testid="stSidebar"] {
     background-color: #F4F7F9 !important;
-    border-right: 1px solid #E1E8ED;
+    border-right: 1px solid #E1E8ED !important;
 }
 
-[data-testid="stSidebar"] .stSelectbox label,
-[data-testid="stSidebar"] .stTextInput label,
-[data-testid="stSidebar"] h2, h3 {
-    font-family: 'Montserrat', sans-serif !important;
-    color: #002D62 !important;
-    font-size: 0.82rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.06em !important;
-}
-
-/* Selectbox and text input */
+/* Inputs */
 .stSelectbox > div > div,
 .stTextInput > div > input {
     border: 1px solid #E1E8ED !important;
     border-radius: 2px !important;
-    font-family: 'Montserrat', sans-serif !important;
     font-size: 0.88rem !important;
 }
 
-/* Divider */
 hr {
-    border: none;
-    border-top: 1px solid #E1E8ED;
-    margin: 16px 0;
-}
-
-/* Status badges */
-.status-approve {
-    background-color: #F4F7F9;
-    border-left: 3px solid #C5A059;
-    padding: 8px 12px;
-    font-size: 0.82rem;
-    font-family: 'Montserrat', sans-serif;
-    color: #4A4A4A;
-    margin-top: 8px;
+    border: none !important;
+    border-top: 1px solid #E1E8ED !important;
+    margin: 12px 0 !important;
 }
 </style>
 """, unsafe_allow_html=True)
