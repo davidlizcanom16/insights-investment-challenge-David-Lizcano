@@ -64,7 +64,8 @@ with st.sidebar:
     if st.button("🔄 Reset conversation"):
         st.session_state.messages = []
         api_key = st.secrets["GEMINI_API_KEY"]
-        st.session_state.chat_session = create_agent(api_key)
+        client = create_agent(api_key)
+        st.session_state.chat_session = start_chat(client)
         st.session_state.session_complete = False
         st.rerun()
 
