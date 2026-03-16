@@ -2,7 +2,7 @@
 # Streamlit UI — Insights ACH Funding Agent
 
 import streamlit as st
-from agent import create_agent, send_message
+from agent import create_agent, start_chat, send_message
 from memory import get_client_memory, save_client_memory
 
 # ── Page config ───────────────────────────────────────────────────
