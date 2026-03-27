@@ -68,10 +68,14 @@ Guide step by step:
   2. Go to Transfers or External Payments
   3. Add Insights as recipient:
      - Routing number: [routing]
-     - Account number: [insights_account_number]
+     - Account number: Use this fixed Insights receiving account: 202991827
      - Account type: Checking
   4. Enter amount: $[amount]
   5. Authorize the transfer
+
+IMPORTANT: The account number 202991827 is Insights fixed receiving account.
+Never ask the client for an Insights account number.
+The client only needs to provide their OWN bank account details.
 
 Always add: "If you authorize before 2:00 PM ET today, funds are
 typically available within 1-3 business days."
