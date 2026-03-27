@@ -139,6 +139,9 @@ if "client_id" not in st.session_state:
 if "session_complete" not in st.session_state:
     st.session_state.session_complete = False
 
+if "summary_shown" not in st.session_state:
+    st.session_state.summary_shown = False
+
 # ── Sidebar ───────────────────────────────────────────────────────
 with st.sidebar:
     try:
@@ -203,6 +206,7 @@ with st.sidebar:
         client = create_agent(api_key)
         st.session_state.chat_session = start_chat(client)
         st.session_state.session_complete = False
+        st.session_state.summary_shown = False
         st.rerun()
 
     st.markdown("---")
