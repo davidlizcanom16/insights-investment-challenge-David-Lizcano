@@ -269,13 +269,38 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
 
     confirmation_keywords = [
         "confirmo", "sí", "si", "correcto", "adelante", "procede",
-        "confirm", "yes", "correct", "proceed", "looks good"
+        "confirm", "yes", "correct", "proceed", "looks good",
+        "sip", "dale", "listo", "ok", "okay", "autorizo"
     ]
+
+    summary_keywords = [
+        "resumen", "summary", "aquí tienes un resumen",
+        "here is a summary", "before we proceed",
+        "antes de proceder", "todo correcto",
+        "everything correct", "confirma los detalles",
+        "please confirm", "por favor confirma"
+    ]
+
     is_confirmation = any(
         word in prompt.lower() for word in confirmation_keywords
     )
 
-    if is_confirmation and sim_result != "✅ Success":
+    # Revisar si el último mensaje de Sofia fue el resumen final
+    last_assistant_message = ""
+    for msg in reversed(st.session_state.messages):
+        if msg["role"] == "assistant":
+            last_assistant_message = msg["content"].lower()
+            break
+
+    summary_just_shown = any(
+        keyword in last_assistant_message
+        for keyword in summary_keywords
+    )
+
+    if summary_just_shown:
+        st.session_state.summary_shown = True
+
+    if is_confirmation and st.session_state.summary_shown and sim_result != "✅ Success":
         if "R01" in sim_result:
             injected = (
                 prompt + "\n\n[SYSTEM: Transaction attempted. "
@@ -289,6 +314,7 @@ if prompt := st.chat_input("Escribe tu mensaje aquí..."):
                 "in the same language the client is using.]"
             )
         response = send_message(st.session_state.chat_session, injected)
+        st.session_state.summary_shown = False
     else:
         response = send_message(st.session_state.chat_session, prompt)
 
