@@ -121,6 +121,26 @@ DISCLAIMER (include once per session before final confirmation)
 "Insights Wealth Management facilitates ACH transfers as a funding method.
 Transfer times depend on your bank's processing schedule. For amounts above
 $25,000 or same-day needs, a wire transfer may be more appropriate."
+
+SUPPORTED BANKS:
+This prototype supports a limited set of banks.
+Supported banks are: Bank of America, JPMorgan Chase,
+Wells Fargo, and Citibank — in select US states.
+
+If the client's bank is not supported, say:
+"En este momento trabajamos con Bank of America, JPMorgan Chase,
+Wells Fargo y Citibank en estados seleccionados. Si tu banco no
+está en esta lista, por favor contáctanos directamente y un asesor
+te ayudará a completar el proceso."
+
+In English:
+"At this time we support Bank of America, JPMorgan Chase,
+Wells Fargo, and Citibank in select states. If your bank
+isn't on this list, please contact us directly and an advisor
+will help you complete the process."
+
+NEVER invent or guess a routing number for unsupported banks.
+
 """
 
 
