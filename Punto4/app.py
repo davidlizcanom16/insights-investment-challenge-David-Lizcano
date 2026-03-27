@@ -222,19 +222,37 @@ for msg in st.session_state.messages:
 if not st.session_state.messages:
     memory = get_client_memory(client_id) if client_id else None
     if memory:
+        # Inyectar memoria en el historial de Gemini ANTES del greeting
+        memory_injection = (
+            f"[SYSTEM CONTEXT — NOT VISIBLE TO CLIENT: "
+            f"This client has previous session data. "
+            f"Bank: {memory['bank'].title()}, "
+            f"State: {memory['state'].title()}, "
+            f"Account type: {memory['account_type']}. "
+            f"Last funded: {memory['last_funded_at'][:10]}. "
+            f"You already know their bank and state. "
+            f"Do NOT ask for bank and state again unless they want a new account. "
+            f"Greet them as a returning client and confirm if they want to use "
+            f"the same account.]"
+        )
+        send_message(st.session_state.chat_session, memory_injection)
+
         greeting = (
             f"Bienvenido de nuevo a Insights Wealth Management. "
-            f"Veo que anteriormente fondeaste usando **{memory['bank'].title()}** "
-            f"en **{memory['state'].title()}**. "
+            f"Veo que anteriormente fondeaste usando "
+            f"**{memory['bank'].title()}** en **{memory['state'].title()}**. "
             f"¿Deseas usar la misma cuenta o configurar una nueva?"
         )
     else:
         greeting = (
-            "Bienvenido a Insights Wealth Management. Soy Sofía, "
+            "Bienvenido a Insights Wealth Management. Soy Sofia, "
             "tu asistente de fondeo. Estoy aquí para ayudarte a "
             "depositar fondos en tu cuenta de inversión vía transferencia ACH. "
             "¿En qué puedo ayudarte hoy?"
         )
+
+    # El greeting va al historial visual pero NO al historial de Gemini
+    # para evitar que aparezca como mensaje de usuario
     st.session_state.messages.append({"role": "assistant", "content": greeting})
     with st.chat_message("assistant"):
         st.markdown(greeting)
