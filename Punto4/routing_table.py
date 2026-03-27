@@ -2,29 +2,24 @@
 # Single source of truth for ABA routing numbers and checksum validation
 
 ROUTING_TABLE = {
+    # Bank of America
     ("bank of america", "texas"):           "111000025",
     ("bank of america", "california"):      "121000358",
     ("bank of america", "new york"):        "021200339",
+
+    # JPMorgan Chase
     ("jpmorgan chase", "new york"):         "021000021",
     ("jpmorgan chase", "texas"):            "111000614",
     ("jpmorgan chase", "california"):       "322271627",
+
+    # Wells Fargo
     ("wells fargo", "california"):          "121000248",
     ("wells fargo", "texas"):               "111900659",
     ("wells fargo", "new york"):            "026012881",
+
+    # Citibank
     ("citibank", "new york"):               "021000089",
     ("citibank", "california"):             "322271724",
-    ("pnc bank", "ohio"):                   "043000096",
-    ("pnc bank", "pennsylvania"):           "031100089",
-    ("capital one", "virginia"):            "051405515",
-    ("capital one", "new york"):            "026013673",
-    ("td bank", "new jersey"):              "031201360",
-    ("td bank", "new york"):                "026013673",
-    ("santander bank", "massachusetts"):    "011075150",
-    ("santander bank", "new york"):         "021407912",
-    ("u.s. bank", "minnesota"):             "091000022",
-    ("u.s. bank", "california"):            "122235821",
-    ("regions bank", "alabama"):            "062000019",
-    ("regions bank", "florida"):            "063104668",
 }
 
 
